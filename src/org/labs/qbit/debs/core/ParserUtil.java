@@ -3,46 +3,29 @@ package org.labs.qbit.debs.core;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.labs.qbit.debs.core.Constants.*;
 
+/**
+ * Copyright (c) 2013, QBit-Labs Inc. (http://qbit-labs.org) All Rights Reserved.
+ *
+ * QBit-Labs Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 public class ParserUtil {
-
-    public void perform(String filename) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filename), 10 * 1024 * 1024);
-
-        long count = 0;
-
-        String line = br.readLine();
-
-        long start = System.currentTimeMillis();
-
-        long timerTime = 0;
-
-        while (line != null) {
-
-            String[] dataStr = line.split(",");
-
-            line = br.readLine();
-            //sid, ts (pico second 10^-12), x (mm), y(mm), z(mm), v (um/s 10^(-6)), a (us^-2), vx, vy, vz, ax, ay, az
-
-            double v_kmh = Double.valueOf(dataStr[5]) * 60 * 60 / 1000000000;
-
-            double a_ms = Double.valueOf(dataStr[6]) / 1000000;
-
-            long time = Long.valueOf(dataStr[1]);
-
-            Object[] data = new Object[]{dataStr[0], time, Double.valueOf(dataStr[2]),
-                    Double.valueOf(dataStr[3]), Double.valueOf(dataStr[4]), v_kmh,
-                    a_ms, Integer.valueOf(dataStr[7]), Integer.valueOf(dataStr[8]),
-                    Integer.valueOf(dataStr[9]), Integer.valueOf(dataStr[10]), Integer.valueOf(dataStr[11]), Integer.valueOf(dataStr[12]),
-                    System.nanoTime(), ((Double) (time * Math.pow(10, -9))).longValue()};
-        }
-    }
 
     public static Map<String, Object> parse(String line) {
         String[] dataStr = line.split(",");
